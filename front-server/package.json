@@ -8,8 +8,8 @@
     "clean": "./node_modules/.bin/rimraf build",
     "lint": "./node_modules/.bin/tslint --force --format verbose 'src/**/*.ts'",
     "lint-fix": "npm run lint -- --fix",
-    "compile": "../../../node_modules/.bin/tsc --pretty",
-    "compile-watch": "../../../node_modules/.bin/tsc --pretty -w",
+    "compile": "tsc --pretty",
+    "compile-watch": "tsc --pretty -w",
     "clean-compile": "npm run clean && npm run compile",
     "clean-lint-compile": "npm run clean && npm run lint && echo Using TypeScript && npm run compile"
   },
@@ -18,7 +18,8 @@
     "express": "~4.15.2",
     "express-handlebars": "^3.0.0",
     "fs-extra": "^4.0.3",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "typescript": "^2.7.2"
   },
   "devDependencies": {
     "@types/ejs": "^2.3.33",
