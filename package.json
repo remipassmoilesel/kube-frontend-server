@@ -13,9 +13,11 @@
     "compile-watch": "tsc --pretty -w",
     "clean-compile": "npm run clean && npm run compile",
     "docker-build": "cd scripts && ./build-image.sh",
-    "docker-build-minikube": "cd scripts && ./build-image-minikube.sh",
     "patch-hosts": "cd scripts && ./path-hosts-for-example.sh",
-    "get-pods": "kubectl get pods --all-namespaces"
+    "get-pods": "kubectl get pods --all-namespaces",
+    "minikube-docker-build": "cd scripts && ./build-image-minikube.sh",
+    "minikube-deploy": "kubectl create -f manifests/",
+    "minikube-destroy": "kubectl delete -f manifests/"
   },
   "dependencies": {
     "chalk": "^2.3.2",

@@ -7,4 +7,4 @@ cd ..
 npm install
 npm run clean-compile
 
-docker build . -t kube-frontend-server:$TAG
+docker build . -t $IMAGE_NAME:$TAG
