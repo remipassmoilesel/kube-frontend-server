@@ -17,4 +17,7 @@ RUN apk update \
 RUN cd /server \
       && npm install --production
 
+RUN mkdir -p /var/log/nginx/
+RUN touch /var/log/nginx/error.log
+
 ENTRYPOINT /server/scripts/entrypoint.sh
