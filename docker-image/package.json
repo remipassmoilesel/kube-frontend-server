@@ -4,13 +4,15 @@
   "license": "GPL-3.0",
   "description": "Frontend server and deployment for Kubernetes",
   "scripts": {
+    "start": "yarn run docker-build && ./scripts/launch-example.sh",
     "lint": "./node_modules/.bin/tslint --force --format verbose 'src/**/*.ts'",
-    "lint-fix": "npm run lint -- --fix",
+    "lint-fix": "yarn run lint -- --fix",
     "clean": "./node_modules/.bin/rimraf build",
     "compile": "tsc --pretty",
     "compile-watch": "tsc --pretty -w",
-    "clean-compile": "npm run clean && npm run compile",
-    "docker-build": "./scripts/build-image.sh"
+    "clean-compile": "yarn run clean && yarn run compile",
+    "docker-build": "./scripts/build-image.sh",
+    "patch-hosts": "./scripts/path-hosts-for-example.sh"
   },
   "dependencies": {
     "ejs": "^2.5.7",

@@ -16,4 +16,4 @@ RUN apk update \
 RUN cd /server \
       && yarn --production
 
-ENTRYPOINT /server/docker/entrypoint.sh
+ENTRYPOINT /server/scripts/entrypoint.sh
