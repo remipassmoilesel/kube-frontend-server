@@ -1,17 +1,17 @@
 import * as express from 'express';
-import { Express } from 'express';
+import {Express} from 'express';
 import * as ejs from 'ejs';
 import * as _ from 'lodash';
 import * as path from 'path';
-import {IServerConfig, IFrontApplicationConfig, frontApplicationsRoot, templateServerPort} from '../config';
-import { log } from '../utils';
+import {frontApplicationsRoot, IFrontApplicationConfig, IServerConfig} from '../config';
+import {log} from '../utils';
 
 // TODO: setup several caches for configuration search
 export class TemplateServer {
     private serverConfig: IServerConfig;
     private app: Express;
 
-    constructor(serverConfig: IServerConfig){
+    constructor(serverConfig: IServerConfig) {
         this.serverConfig = serverConfig;
     }
 
@@ -104,15 +104,17 @@ export class TemplateServer {
 
     private startServer(): Promise<void> {
 
+        const port = this.serverConfig.templateServerPort;
+
         return new Promise((resolve, reject) => {
-            this.app.listen(templateServerPort, (error) => {
-                if (error){
+            this.app.listen(port, (error) => {
+                if (error) {
                     reject(error);
                     return;
                 }
 
                 log();
-                log(`Listening on http://0.0.0.0:${templateServerPort}`);
+                log(`Listening on http://0.0.0.0:${port}`);
                 log();
                 resolve();
             });

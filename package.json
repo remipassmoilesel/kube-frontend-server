@@ -12,12 +12,13 @@
     "compile": "tsc --pretty",
     "compile-watch": "tsc --pretty -w",
     "clean-compile": "npm run clean && npm run compile",
-    "docker-build": "cd scripts && ./build-image.sh",
-    "patch-hosts": "cd scripts && ./path-hosts-for-example.sh",
+    "docker-build-local": "cd scripts && ./build-image.sh",
     "get-pods": "kubectl get pods --all-namespaces",
+    "minikube-path-host": "cd scripts && ./path-hosts-for-example.sh",
     "minikube-docker-build": "cd scripts && ./build-image-minikube.sh",
     "minikube-deploy": "kubectl create -f manifests/",
-    "minikube-destroy": "kubectl delete -f manifests/"
+    "minikube-destroy": "kubectl delete -f manifests/",
+    "minikube-clean-deploy": "npm run minikube-destroy; npm run minikube-deploy"
   },
   "dependencies": {
     "chalk": "^2.3.2",

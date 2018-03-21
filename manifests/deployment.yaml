@@ -13,4 +13,4 @@ spec:
       - name: kube-frontend-server
         image: kube-frontend-server:0.1
         ports:
-        - containerPort: 8000
+        - containerPort: 3080

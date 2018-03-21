@@ -8,9 +8,36 @@ assert.ok(fs.existsSync(projectRoot), 'Project root is invalid');
 export const frontApplicationsRoot = path.resolve(projectRoot, 'front-applications');
 assert.ok(fs.existsSync(frontApplicationsRoot), 'Frontend applications root is invalid');
 
-export const templateServerPort = 3080;
+export const mainConfig: IServerConfig = {
+    templateServerPort: 3080,
+    nginxConfigurationPath: '/etc/nginx/conf.d/default.conf',
+    nginxReloadInterval: 1000,
+    nginxConfigurationInterval: 1000,
+    frontApplicationsConfig: [
+        {
+            id: 'domain1',
+            hostname: 'domain1.com',
+            baseDirectory: 'app1',
+            templatedConfiguration: {
+                apiUrl: 'http://backend.domain1.com',
+                parameter1: 'value1',
+            },
+        },
+        {
+            id: 'domain2',
+            hostname: 'domain2.com',
+            baseDirectory: 'app2',
+            templatedConfiguration: {
+                apiUrl: 'http://backend.domain2.com',
+                parameter1: 'value2',
+            },
+        },
+    ],
+};
+
 
 export interface IServerConfig {
+    templateServerPort: number;
     nginxConfigurationPath: string;
     nginxConfigurationInterval: number;
     nginxReloadInterval: number;
@@ -25,5 +52,6 @@ export interface IFrontApplicationConfig {
 }
 
 export function loadConfig(): IServerConfig {
-    return require(path.resolve(projectRoot, 'config'));
+    return mainConfig;
 }
+
