@@ -12,10 +12,9 @@ COPY config.js /server/config.js
 COPY package.json /server/package.json
 
 RUN apk update \
-      && apk add nodejs \
-      && npm install -g yarn
+      && apk add nodejs
 
 RUN cd /server \
-      && yarn --production
+      && npm install --production
 
 ENTRYPOINT /server/scripts/entrypoint.sh

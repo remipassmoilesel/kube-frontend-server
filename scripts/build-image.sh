@@ -4,7 +4,7 @@ source ./config.sh
 
 cd ..
 
-yarn install
-yarn clean-compile
+npm install
+npm run clean-compile
 
 docker build . -t kube-frontend-server:$TAG
