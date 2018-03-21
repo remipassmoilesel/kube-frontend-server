@@ -2,6 +2,7 @@
   "name": "kube-frontend-server",
   "version": "0.0.1",
   "license": "GPL-3.0",
+  "repository": "https://github.com/remipassmoilesel/kube-frontend-server",
   "description": "Frontend server and deployment for Kubernetes",
   "scripts": {
     "start": "npm run docker-build && cd scripts && ./launch-example.sh",
@@ -22,8 +23,7 @@
     "express": "~4.15.2",
     "express-handlebars": "^3.0.0",
     "fs-extra": "^4.0.3",
-    "lodash": "^4.17.4",
-    "tslint": "^5.9.1"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "@types/chai": "^4.1.2",
@@ -33,6 +33,7 @@
     "@types/mocha": "^2.2.48",
     "@types/node": "^9.4.7",
     "rimraf": "^2.6.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "tslint": "^5.9.1"
   }
 }
