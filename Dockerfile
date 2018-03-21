@@ -6,6 +6,8 @@ RUN mkdir -p /logs
 COPY build /server/build
 COPY front-applications /server/front-applications
 COPY scripts /server/scripts
+COPY templates /server/templates
+
 COPY config.js /server/config.js
 COPY package.json /server/package.json
 

@@ -1,34 +1,29 @@
-import * as path from 'path';
-import { TemplateServer } from './templater/TemplateServer';
-import { NginxConfigurator } from './nginx/NginxConfigurator';
-import { IFrontApplicationConfig } from './templater/IFrontApplicationConfig';
-import { log } from './utils';
+import {TemplateServer} from './templater/TemplateServer';
+import {NginxConfigurator} from './nginx/NginxConfigurator';
+import {loadConfig} from './config';
+import {log} from './utils';
 
-const projectRoot = path.resolve(__dirname, '..');
-export const appConfigurations: IFrontApplicationConfig[] = require(path.resolve(projectRoot, 'config'));
+const serverConfig = loadConfig();
 
 log();
-log(`Initialized with configuration: ${JSON.stringify(appConfigurations, null, 2)}`);
+log(`Initialized with configuration: ${JSON.stringify(serverConfig, null, 2)}`);
 log();
 
-const configureNginxAndLoadTemplater = () => {
+const configureNginx = async () => {
 
-    const nginxConfigurationPath = '/etc/nginx/conf.d/default.conf';
-    const nginxConfigurator = new NginxConfigurator();
+    try {
+        const nginxConfigurator = new NginxConfigurator(serverConfig);
+        await nginxConfigurator.configureAndReload();
 
-    nginxConfigurator.configureAndReload(nginxConfigurationPath)
-        .then(() => {
+        log('Nginx initialization succeed, starting template server ...');
 
-            log('Nginx initialization succeed');
-
-            const httpServer = new TemplateServer();
-            httpServer.init();
-        })
-        .catch((e) => {
-            log('Error while initializing Nginx configuration: ', e);
-        });
+        const httpServer = new TemplateServer(serverConfig);
+        await httpServer.init();
+    } catch (e) {
+        log('Error while initializing Nginx configuration: ', e);
+    }
 
 };
 
 // let time for nginx to set up
-setTimeout(configureNginxAndLoadTemplater, 1000);
+setTimeout(configureNginx, serverConfig.nginxConfigurationInterval);

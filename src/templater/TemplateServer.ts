@@ -3,25 +3,47 @@ import { Express } from 'express';
 import * as ejs from 'ejs';
 import * as _ from 'lodash';
 import * as path from 'path';
-import { IFrontApplicationConfig } from './IFrontApplicationConfig';
+import {IServerConfig, IFrontApplicationConfig, frontApplicationsRoot, templateServerPort} from '../config';
 import { log } from '../utils';
-import { appConfigurations } from '../index';
-
-const projectRoot = path.resolve(__dirname, '..', '..');
-const frontApplicationsRoot = path.resolve(projectRoot, 'front-applications');
-const port = process.env.PORT || 3080;
-
-log(`Initialized with configuration: ${JSON.stringify(appConfigurations, null, 2)}`);
 
 // TODO: setup several caches for configuration search
 export class TemplateServer {
+    private serverConfig: IServerConfig;
     private app: Express;
 
-    public init() {
+    constructor(serverConfig: IServerConfig){
+        this.serverConfig = serverConfig;
+    }
+
+    public init(): Promise<void> {
         this.app = express();
 
         this.configureTemplateEngine();
         this.configureStaticServices();
+        this.configureTemplateRoutes();
+        return this.startServer();
+    }
+
+    private configureTemplateEngine() {
+        this.app.set('views', frontApplicationsRoot);
+        this.app.engine('html', ejs.renderFile);
+        this.app.set('view engine', 'html');
+    }
+
+    /**
+     * Although we can serve static files with express, we prefer
+     * use Nginx instead
+     *
+     */
+    private configureStaticServices() {
+        _.forEach(this.serverConfig.frontApplicationsConfig, (config: IFrontApplicationConfig) => {
+            const route = this.getStaticRouteForConfig(config);
+            log(`Serve static files for ${config.hostname} on route ${route}`);
+            this.app.use(route, express.static(path.join(frontApplicationsRoot, 'static')));
+        });
+    }
+
+    private configureTemplateRoutes() {
 
         // Template index with configuration for each non static request
         this.app.use(/^(?!\/static).*/, (req, res) => {
@@ -52,32 +74,6 @@ export class TemplateServer {
             res.redirect(staticPath);
 
         });
-
-        this.app.listen(port, () => {
-            log();
-            log(`Listening on http://0.0.0.0:${port}`);
-            log();
-        });
-
-    }
-
-    private configureTemplateEngine() {
-        this.app.set('views', frontApplicationsRoot);
-        this.app.engine('html', ejs.renderFile);
-        this.app.set('view engine', 'html');
-    }
-
-    /**
-     * Although we can serve static files with express, we prefer
-     * use Nginx instead
-     *
-     */
-    private configureStaticServices() {
-        _.forEach(appConfigurations, (config) => {
-            const route = this.getStaticRouteForConfig(config);
-            log(`Serve static files for ${config.hostname} on route ${route}`);
-            this.app.use(route, express.static(path.join(frontApplicationsRoot, 'static')));
-        });
     }
 
     private getIndexForHostname(hostname: string): string {
@@ -86,7 +82,7 @@ export class TemplateServer {
 
     private getConfigForHostname(hostname: string): IFrontApplicationConfig {
 
-        const configs = _.filter(appConfigurations, (config: IFrontApplicationConfig) => {
+        const configs = _.filter(this.serverConfig.frontApplicationsConfig, (config: IFrontApplicationConfig) => {
             return config.hostname.trim() === hostname.trim();
         });
 
@@ -104,5 +100,23 @@ export class TemplateServer {
 
     private getStaticRouteForConfig(config: IFrontApplicationConfig): string {
         return `/static_${config.id}`;
+    }
+
+    private startServer(): Promise<void> {
+
+        return new Promise((resolve, reject) => {
+            this.app.listen(templateServerPort, (error) => {
+                if (error){
+                    reject(error);
+                    return;
+                }
+
+                log();
+                log(`Listening on http://0.0.0.0:${templateServerPort}`);
+                log();
+                resolve();
+            });
+        });
+
     }
 }
