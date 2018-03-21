@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-# MUST be executed from parent directory
+source ./config.sh
+
+cd ..
 
 yarn install
 yarn clean-compile
 
-docker build . -t kube-frontend-server:0.1
+docker build . -t kube-frontend-server:$TAG

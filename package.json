@@ -4,15 +4,17 @@
   "license": "GPL-3.0",
   "description": "Frontend server and deployment for Kubernetes",
   "scripts": {
-    "start": "yarn run docker-build && ./scripts/launch-example.sh",
+    "start": "yarn run docker-build && cd scripts && ./launch-example.sh",
     "lint": "./node_modules/.bin/tslint --force --format verbose 'src/**/*.ts'",
     "lint-fix": "yarn run lint -- --fix",
     "clean": "./node_modules/.bin/rimraf build",
     "compile": "tsc --pretty",
     "compile-watch": "tsc --pretty -w",
     "clean-compile": "yarn run clean && yarn run compile",
-    "docker-build": "./scripts/build-image.sh",
-    "patch-hosts": "./scripts/path-hosts-for-example.sh"
+    "docker-build": "cd scripts && ./build-image.sh",
+    "docker-build-minikube": "cd scripts && ./build-image-minikube.sh",
+    "patch-hosts": "cd scripts && ./path-hosts-for-example.sh",
+    "get-pods": "kubectl get pods --all-namespaces"
   },
   "dependencies": {
     "chalk": "^2.3.2",
