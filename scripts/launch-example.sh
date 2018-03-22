@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-docker run -p 3000:3000 -ti kube-frontend-server:0.1
+source ./config.sh
+
+docker stop -t 0 kube-front-server
+docker rm kube-front-server
+docker run -p 3080:80 -ti $IMAGE_NAME:$TAG --name kube-front-server
