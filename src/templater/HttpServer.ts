@@ -13,11 +13,10 @@ export class HttpServer {
     constructor(serverConfig: IServerConfig) {
         this.serverConfig = serverConfig;
         this.app = express();
+        this.handlers = new HttpHandlers(serverConfig);
 
         this.configureTemplateEngine();
         this.configureTemplateRoutes();
-
-        this.handlers = new HttpHandlers(serverConfig);
     }
 
     public start(): Promise<void> {

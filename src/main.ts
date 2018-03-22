@@ -1,6 +1,8 @@
 import {HttpServer} from './templater/HttpServer';
 import {NginxConfigurator} from './nginx/NginxConfigurator';
-import {loadConfig, log} from './misc/utils';
+import {error, loadConfig, log} from './misc/utils';
+
+import 'source-map-support/register';
 
 const serverConfig = loadConfig();
 
@@ -12,14 +14,15 @@ const configureNginx = async () => {
 
     try {
         const nginxConfigurator = new NginxConfigurator(serverConfig);
-        await nginxConfigurator.configureAndReload();
 
+        log('Reloading Nginx');
+        await nginxConfigurator.configureAndReload();
         log('Nginx initialization succeed, starting template server ...');
 
         const httpServer = new HttpServer(serverConfig);
         await httpServer.start();
     } catch (e) {
-        log('Error while initializing Nginx configuration: ', e);
+        error('Error while initializing Nginx configuration: ', e);
     }
 
 };

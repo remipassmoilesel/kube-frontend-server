@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export NODE_ENV = 'production';
+
 ## TODO: replace with monit
 while true; do
 

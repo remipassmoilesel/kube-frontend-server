@@ -1,5 +1,5 @@
 import {IServerConfig} from './config-types';
-import {mainConfig} from '../config';
+import {devConfig, mainConfig} from '../config';
 
 const chalk = require('chalk');
 
@@ -35,6 +35,9 @@ export function printColor(color: string, message?: string, data?: any) {
 }
 
 export function loadConfig(): IServerConfig {
+    if (process.env.NODE_ENV !== 'production'){
+        return devConfig;
+    }
     return mainConfig;
 }
 

@@ -3,3 +3,4 @@ build
 .idea
 yarn.lock
 yarn-error.log
+default.conf
