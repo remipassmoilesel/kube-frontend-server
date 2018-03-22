@@ -16,8 +16,8 @@
     "docker-start": "npm run docker-build && cd scripts && ./launch-example.sh",
     "minikube-path-host": "cd scripts && ./path-hosts.sh",
     "minikube-docker-build": "cd scripts && ./build-image-minikube.sh",
-    "minikube-deploy": "kubectl create -f manifests/",
-    "minikube-destroy": "kubectl delete -f manifests/",
+    "minikube-deploy": "cd scripts && ./minikube-deploy.sh",
+    "minikube-destroy": "cd scripts && ./minikube-destroy.sh",
     "minikube-clean-deploy": "npm run minikube-destroy; npm run minikube-deploy"
   },
   "dependencies": {
