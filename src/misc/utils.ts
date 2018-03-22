@@ -1,3 +1,5 @@
+import {IServerConfig} from './config-types';
+import {mainConfig} from '../config';
 
 const chalk = require('chalk');
 
@@ -31,3 +33,8 @@ export function printColor(color: string, message?: string, data?: any) {
         console.log(data);
     }
 }
+
+export function loadConfig(): IServerConfig {
+    return mainConfig;
+}
+

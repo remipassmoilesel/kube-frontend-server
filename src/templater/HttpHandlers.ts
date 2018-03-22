@@ -1,6 +1,6 @@
 import * as express from 'express';
-import {log} from '../utils';
-import {IFrontApplicationConfig, IServerConfig} from '../config';
+import {log} from '../misc/utils';
+import {IFrontApplicationConfig, IServerConfig} from '../misc/config-types';
 import _ = require('lodash');
 
 // TODO: setup several caches for configuration search

@@ -1,7 +1,6 @@
 import {HttpServer} from './templater/HttpServer';
 import {NginxConfigurator} from './nginx/NginxConfigurator';
-import {loadConfig} from './config';
-import {log} from './utils';
+import {loadConfig, log} from './misc/utils';
 
 const serverConfig = loadConfig();
 

@@ -2,8 +2,8 @@ import * as path from 'path';
 import * as ejs from 'ejs';
 import * as fs from 'fs-extra';
 import { spawn } from 'child_process';
-import { log } from '../utils';
-import {IServerConfig, projectRoot} from '../config';
+import { log } from '../misc/utils';
+import {IServerConfig, projectRoot} from '../misc/config-types';
 
 const templatePath = path.join(projectRoot, 'templates/nginx.conf.ejs');
 

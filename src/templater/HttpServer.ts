@@ -1,8 +1,8 @@
 import * as express from 'express';
 import {Express} from 'express';
 import * as ejs from 'ejs';
-import {frontApplicationsRoot, IServerConfig} from '../config';
-import {log} from '../utils';
+import {frontApplicationsRoot, IServerConfig} from '../misc/config-types';
+import {log} from '../misc/utils';
 import {HttpHandlers} from './HttpHandlers';
 
 export class HttpServer {
