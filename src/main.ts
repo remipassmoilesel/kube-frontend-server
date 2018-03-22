@@ -1,4 +1,4 @@
-import {TemplateServer} from './templater/TemplateServer';
+import {HttpServer} from './templater/HttpServer';
 import {NginxConfigurator} from './nginx/NginxConfigurator';
 import {loadConfig} from './config';
 import {log} from './utils';
@@ -17,8 +17,8 @@ const configureNginx = async () => {
 
         log('Nginx initialization succeed, starting template server ...');
 
-        const httpServer = new TemplateServer(serverConfig);
-        await httpServer.init();
+        const httpServer = new HttpServer(serverConfig);
+        await httpServer.start();
     } catch (e) {
         log('Error while initializing Nginx configuration: ', e);
     }
