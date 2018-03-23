@@ -4,7 +4,7 @@ RUN mkdir -p /server
 RUN mkdir -p /logs
 
 COPY build /server/build
-COPY front-applications /server/front-applications
+COPY applications /server/applications
 COPY scripts /server/scripts
 COPY templates /server/templates
 

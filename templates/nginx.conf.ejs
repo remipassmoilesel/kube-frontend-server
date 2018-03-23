@@ -10,7 +10,7 @@ server {
         #access_log   /logs/<%= frontApps[i].hostname %>.access.log;
         #error_log    /logs/<%= frontApps[i].hostname %>.error.log debug;
 
-        root /server/front-applications/<%= frontApps[i].baseDirectory %>;
+        root /server/applications/<%= frontApps[i].baseDirectory %>;
 
         server_name <%= frontApps[i].hostname %>;
 
@@ -18,7 +18,7 @@ server {
 
         # serve static dir
         location /static {
-                root /server/front-applications/<%= frontApps[i].baseDirectory %>;
+                root /server/applications/<%= frontApps[i].baseDirectory %>;
         }
 
         # Template index

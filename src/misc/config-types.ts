@@ -5,7 +5,7 @@ import * as assert from 'assert';
 export const projectRoot = path.resolve(__dirname, '..', '..');
 assert.ok(fs.existsSync(path.resolve(projectRoot, 'package.json')), 'Project root is invalid');
 
-export const frontApplicationsRoot = path.resolve(projectRoot, 'front-applications');
+export const frontApplicationsRoot = path.resolve(projectRoot, 'applications');
 assert.ok(fs.existsSync(frontApplicationsRoot), 'Frontend applications root is invalid');
 
 export interface IServerConfig {
