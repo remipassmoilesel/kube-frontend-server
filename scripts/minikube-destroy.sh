@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ./manifests.sh
+source ./config.sh
 
 cd ..
 
